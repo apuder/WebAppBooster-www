@@ -1,0 +1,349 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>WebAppBooster Demo</title>
+        <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.2.0.min.css" />
+        <link rel="stylesheet" type="text/css" href="css/local.css" />
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/jquery.mobile-1.2.0.min.js"></script>
+        <script type="text/javascript" src="js/webappbooster.js"></script>
+    </head>
+    <body onload="init()">
+        <!-- Home -->
+        <div data-role="page" id="page1">
+            <div data-theme="a" data-role="header">
+                <h3>
+                    WebAppBooster Demo
+                </h3>
+            </div>
+            <div data-role="content">
+                <div data-role="fieldcontain">
+                    <label for="actions">
+                        Action:
+                    </label>
+                    <select id="actions" name="">
+                        <option value="action_request_permissions">
+                            Request permissions
+                        </option>
+                        <option value="action_pick_contact">
+                            Pick contact
+                        </option>
+                        <option value="action_list_contacts">
+                            List contacts
+                        </option>
+                        <option value="action_list_appointments">
+                            List appointments
+                        </option>
+                        <option value="action_start_gyro">
+                            Start gyroscope
+                        </option>
+                        <option value="action_stop_gyro">
+                            Stop gyroscope
+                        </option>
+                        <option value="action_list_songs">
+                            List songs
+                        </option>
+                        <option value="action_list_images">
+                            List images
+                        </option>
+                        <option value="action_pick_image">
+                            Pick image
+                        </option>
+                        <option value="action_take_photo">
+                            Take photo
+                        </option>
+                        <option value="action_vibrate">
+                            Vibrate
+                        </option>
+                        <option value="action_power_information">
+                            Power information
+                        </option>
+                        <option value="action_network_information">
+                            Network information
+                        </option>
+                        <option value="action_oauth">
+                            OAuth authentication
+                        </option>
+                        <option value="action_share_text">
+                            Share text
+                        </option>
+                        <option value="action_dictate">
+                            Dictate
+                        </option>
+                        <option value="action_record">
+                            Record
+                        </option>
+                        <option value="action_speak_text">
+                            Speak text
+                        </option>
+                        <option value="action_proxy">
+                            Proxy request
+                        </option>
+                        <option value="action_bt_devices">
+                            List Bluetooth devices
+                        </option>
+                    </select>
+                </div>
+                <a id="button_do_action" data-role="button" href="#" onclick="do_action(); return false;">
+                    Do Action
+                </a>
+                <div data-role="fieldcontain">
+                    <fieldset data-role="controlgroup">
+                        <label for="log">
+                            Log:
+                        </label>
+                        <textarea name="" id="log" placeholder=""></textarea>
+                    </fieldset>
+                </div>
+                <div id="image-container" style="display:none; background-color: #fbfbfb; border: 1px solid #b8b8b8;">
+                    <img id="image" alt="image" />
+                </div>
+                <div id="audio-container">
+                </div>
+            </div>
+            <div data-theme="a" data-role="footer" data-position="fixed" style="display:table;">
+              <div style="display: table-cell; vertical-align: middle; padding-left:50px;">
+                <a href="http://webappbooster.org" data-transition="fade">
+                  Visit WebAppBooster.org for details
+                </a>
+              </div>
+            </div>
+        </div>
+
+<script type="text/javascript">
+
+var lastLogs = new Array();
+
+function log(msg) {
+    var l = document.getElementById("log");
+    var s = msg;
+    if (typeof msg != "string") {
+        s = JSON.stringify(msg);
+    }
+    lastLogs.push(s);
+    if (lastLogs.length == 10) {
+        lastLogs.shift();
+    }
+    l.innerHTML = lastLogs.join('\n');
+    l.scrollTop = l.scrollHeight;
+}
+
+function showImage(uri) {
+    var img = document.getElementById("image");
+    img.src = uri;
+    var imgContainer = document.getElementById("image-container");
+    imgContainer.style.display = "inline-block";
+}
+
+function hideImage() {
+    var imgContainer = document.getElementById("image-container");
+    imgContainer.style.display = "none";
+}
+
+function playAudio(uri) {
+    var container = document.getElementById("audio-container");
+    var audio = document.createElement("audio");
+    audio.setAttribute("preload", "auto");
+    audio.setAttribute("type", "audio/wav");
+    audio.setAttribute("controls", true);
+    audio.setAttribute("src", uri);
+    container.appendChild(audio);
+}
+
+function init() {
+    WebAppBooster.open('/demo', function (res) {
+        if (res.status == WebAppBooster.OK) {
+            log("WebAppBooster connected");
+        } else if (res.status == WebAppBooster.CLOSED) {
+            log("Connection closed");
+        } else if (res.status == WebAppBooster.ERR_AUTHENTICATION_REQUIRED) {
+            log("Authentication required");
+            window.close();
+        } else if (res.status == WebAppBooster.ERR_WEBSOCK_ACCESS_DENIED) {
+            log("Connection access denied");
+        } else {
+            log("WebAppBooster not connected");
+        }
+    });
+}
+
+function action_request_permissions() {
+    var p = [WebAppBooster.PERMISSION_READ_CONTACTS,
+             WebAppBooster.PERMISSION_READ_CALENDAR,
+             WebAppBooster.PERMISSION_GYRO,
+             WebAppBooster.PERMISSION_AUDIO,
+             WebAppBooster.PERMISSION_GALLERY,
+             WebAppBooster.PERMISSION_CAMERA,
+             WebAppBooster.PERMISSION_VIBRATE,
+             WebAppBooster.PERMISSION_RECORD_AUDIO,
+             WebAppBooster.PERMISSION_PROXY,
+             WebAppBooster.PERMISSION_BLUETOOTH];
+    WebAppBooster.requestPermissions(p, function(resp) {
+        if (resp.status == WebAppBooster.OK) {
+            log("Permissions granted");
+        } else {
+            log("Permissions not granted");
+        }
+    });
+}
+
+function action_pick_contact() {
+    WebAppBooster.pickContact(function(resp) {
+        log(resp);
+        hideImage();
+        if (resp.photoUri) {
+            showImage(resp.photoUri);
+        }
+    });
+}
+
+function action_list_contacts() {
+    log("LIST_CONTACTS for 'Mickey Mouse'");
+    WebAppBooster.listContacts("Mickey Mouse", function(resp) {
+        log(resp);
+        hideImage();
+        if (resp.photoUri) {
+            showImage(resp.photoUri);
+        }
+    });
+}
+
+function action_list_appointments() {
+    log("LIST_APPOINTMENTS between today and tomorrow");
+    var now = new Date().getTime();
+    var tomorrow = new Date(now + 24 * 60 * 60 * 1000).getTime();
+    WebAppBooster.listAppointments(now, tomorrow, function(resp) {
+        log(resp);
+    });
+}
+
+function action_start_gyro() {
+    WebAppBooster.startGyro(function(resp) {
+        log(resp);
+    });
+}
+
+function action_stop_gyro() {
+    WebAppBooster.stopGyro(function(resp) {
+        // Do nothing
+    });
+}
+
+function action_list_songs() {
+    WebAppBooster.listSongs(function(resp) {
+        log(resp);
+    });
+}
+
+function action_list_images() {
+    WebAppBooster.listImages(function(resp) {
+        log(resp);
+    });
+}
+
+function action_pick_image() {
+    WebAppBooster.pickImage(function(resp) {
+        log(resp);
+        if (resp.status == 0) {
+            showImage(resp.uri);
+        }
+    });
+}
+
+function action_take_photo() {
+    WebAppBooster.takePhoto(function(resp) {
+        log(resp);
+        if (resp.status == 0) {
+            showImage(resp.uri);
+    	}
+    });
+}
+
+function action_vibrate() {
+    WebAppBooster.vibrate(100, function(resp) {
+        log(resp);
+    });
+}
+
+function action_power_information() {
+    WebAppBooster.powerInformation(function(resp) {
+        log(resp);
+    });
+}
+
+function action_network_information() {
+    WebAppBooster.networkInformation(function(resp) {
+        log(resp);
+    });
+}
+
+function action_oauth() {
+	var uri = "https://accounts.google.com/o/oauth2/auth?state=%2Fprofile&redirect_uri=https%3A%2F%2Foauth2-login-demo.appspot.com%2Fcode&response_type=code&client_id=812741506391.apps.googleusercontent.com&approval_prompt=force&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile";
+	var redirect_uri = "https://oauth2-login-demo.appspot.com/code";
+	WebAppBooster.oauth(uri, redirect_uri, function(resp) {
+		log(resp);
+	});
+}
+
+function action_share_text() {
+    log("SHARE 'Hello World!'");
+    WebAppBooster.shareText("Hello World!", function(resp) {
+        log(resp);
+    });
+}
+
+function action_dictate() {
+    WebAppBooster.dictate("Please say something", function(resp) {
+        log(resp);
+    });
+}
+
+function action_record() {
+    WebAppBooster.record(function(resp) {
+        log(resp);
+        if (resp.status == 0) {
+            playAudio(resp.uri);
+        }
+    });
+}
+
+function action_speak_text() {
+    var text = "This is cool";
+    log("Saying: " + text);
+    WebAppBooster.speakText("", text, function(resp) {
+        log(resp);
+    });
+}
+
+function action_proxy() {
+    var req = {
+        url: "http://www.webappbooster.org",
+        responseType: "text"};
+    log("Do proxy request");
+    WebAppBooster.proxy(req, function(resp) {
+        log("Result code:" + resp.code);
+        log("Result: " + resp.contentText);
+    });
+}
+
+function action_bt_devices() {
+	WebAppBooster.bluetoothDevices(function(resp) {
+		log("Bluetooth enabled: " + resp.bluetoothOn);
+		if (resp.devices) {
+			for (var i = 0; i < resp.devices.length; i++) {
+				var d = resp.devices[i];
+				log("  " + (i + 1) + ": " + d.displayName + " (" + d.hostName + ")");
+			}
+		}
+	});
+}
+function do_action() {
+    eval($('#actions').val() + '();');
+}
+
+</script>
+
+    </body>
+</html>

@@ -1,0 +1,14 @@
+.ui-controlgroup-controls {
+    width:100% !important;
+}
+
+.ui-footer-fixed {
+    height:50px;
+}
+
+textarea.ui-input-text {
+    width:100% !important;
+    height:200px !important;
+    font-family:monospace;
+}
+

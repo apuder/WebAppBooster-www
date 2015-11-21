@@ -1,0 +1,321 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <title>WebAppBooster</title>
+    <link rel="stylesheet" type="text/css" href="./css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="./css/lightbox.css"/>
+    <link rel="stylesheet" type="text/css" href="./css/shCore.css"/>
+    <link rel="stylesheet" type="text/css" href="./css/shThemeEclipse.css"/>
+    <link rel="stylesheet" type="text/css" href="./css/local.css"/>
+    <script type="text/javascript" src="js/shCore.js"></script>
+    <script type="text/javascript" src="js/shBrushJScript.js"></script>
+    <script type="text/javascript" src="js/shBrushJava.js"></script>
+    <script type="text/javascript" src="js/shBrushXml.js"></script>
+    <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="js/lightbox.js"></script>
+    <script type="text/javascript">
+        function showSection(id) {
+            var sections = ["sectionHome", "sectionScreenshots", "sectionFaq", "sectionDeveloper",
+                            "sectionDoc", "sectionDemo"];
+            var e = document.getElementById(id);
+            for (var i in sections) {
+                var s = document.getElementById(sections[i]);
+                s.className = "hidden";
+            }
+            e.className = "visible";
+            return true;
+        }
+    </script>
+</head>
+
+<body>
+  <div id="page">
+	
+    <div id="header">
+        <div id="headerTitle">WebAppBooster</div>
+        <div id="headerSubText">Give your web apps a little boost</div>
+    </div>
+    <div id="bar">
+        <div class="navLink"><a href="#" onclick="return showSection('sectionHome')">home</a></div>
+        <div class="navLink"><a href="#" onclick="return showSection('sectionScreenshots')">screenshots</a></div>
+        <div class="navLink"><a href="#" onclick="return showSection('sectionDeveloper')">developer</a></div>
+        <div class="navLink"><a href="#" onclick="return showSection('sectionDoc')">doc</a></div>
+        <div class="navLink"><a href="#" onclick="return showSection('sectionDemo')">demo</a></div>
+        <div class="navLink"><a href="#" onclick="return showSection('sectionFaq')">faq</a></div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- HOME                                                                      -->
+    <!-- ========================================================================= -->
+    <div id="sectionHome" class="visible">
+        <div class="contentTitle"><h1>What is WebAppBooster?</h1></div>
+        <div class="contentText">
+          <p>WebAppBooster is a free Android app you can download from Google's Play Store.
+             It gives web applications you visit access to your smartphone's
+             sensors and locally stored data. The benefit is that WebAppBooster enriches
+             a web application by enabling functionality that ordinarily only a native
+             app can do.</p>
+        </div>
+
+        <div class="contentTitle"><h1>How does is work?</h1></div>
+        <div class="contentText">
+          <p>WebAppBooster runs a service in the background of your smartphone. When
+             you surf to a web page with your browser, the web application can contact
+             this background service to request access to your devices capabilities.
+             Additional details can be found in a
+             <a href="mobilsoft2014.pdf">MobilSoft 2014 paper</a>.</p>
+        </div>
+
+        <div class="contentTitle"><h1>Is it safe?</h1></div>
+        <div class="contentText">
+          <p>Yes. You will have to grant permissions to a web application before it can
+             access any sensors or local data on your device. This is identical to
+             when you install an app from the Google Play Store: before Android will
+             allow installation of an app, you first have to grant it the requested
+             permissions. WebAppBooster will do the same for web apps.</p>
+        </div>
+
+        <div class="contentTitle"><h1>Where can I get it?</h1></div>
+        <div class="contentText">
+          <p>WebAppBooster is an Open Source application and the complete source code is available
+             at <a href="https://github.com/apuder/WebAppBooster">Github</a>.
+             The ready-to-be-used version of WebAppBooster is available at Google's
+             <a href="https://play.google.com/store/apps/details?id=org.webappbooster">Play Store</a>.
+             Once installed, be sure to try out a little
+             <a href="#" onclick="return showSection('sectionDemo')">demo</a>.</p>
+        </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- SCREENSHOTS                                                               -->
+    <!-- ========================================================================= -->
+    <div id="sectionScreenshots" class="hidden">
+        <div class="contentTitle"><h1>Screenshots</h1></div>
+        <div class="contentText">
+          <ol>
+            <li><a href="images/screenshot-1.png" rel="lightbox[screenshots]" title="WebAppBooster with no active connections">WebAppBooster with no active connections</a></li>
+            <li><a href="images/screenshot-2.png" rel="lightbox[screenshots]" title="A web app that connects to WebAppBooster">A web app that connects to WebAppBooster</a></li>
+            <li><a href="images/screenshot-3.png" rel="lightbox[screenshots]" title="Web app requests permissions from the user">Web app requests permissions from the user</a></li>
+            <li><a href="images/screenshot-4.png" rel="lightbox[screenshots]" title="WebAppBooster shows a new active connection">WebAppBooster shows a new active connection</a></li>
+            <li><a href="images/screenshot-5.png" rel="lightbox[screenshots]" title="WebAppBooster shows permissions for active connection">WebAppBooster shows permissions for active connection</a></li>
+            <li><a href="images/screenshot-6.png" rel="lightbox[screenshots]" title="Web app picks a contact via WebAppBooster">Web app picks a contact via WebAppBooster</a></li>
+            <li><a href="images/screenshot-7.png" rel="lightbox[screenshots]" title="Web app shows the selected contact">Web app shows the selected contact</a></li>
+          </ol>
+        </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- DEVELOPER                                                                 -->
+    <!-- ========================================================================= -->
+    <div id="sectionDeveloper" class="hidden">
+        <div class="contentTitle"><h1>Developer</h1></div>
+        <div class="contentText">
+
+<p>This documentation is intended for Android developers who wish to extend
+WebAppBooster's functionality by adding new plugins. If you are a web developer
+who wants to integrate WebAppBooster into a web app, please see the
+<a href="#" onclick="return showSection('sectionDoc')">documentation</a>
+page.</p>
+
+<p>New plugins have to be registered in res/xml/plugins.xml. A plugin has a name that
+corresponds with the name of the Java class implementing the plugin. A plugin responds
+to one or more actions. Before a web app can access the plugin, the user has to first
+grant the appropriate permission. The following excerpt of plugin.xml shows how to
+add a plugin called FooPlugin that responds to actions FOO_COMMAND_1 and FOO_COMMAND_2
+and requires the user to grant a permission called FOO_PERMISSION:</p>
+
+<pre class="brush: xml">
+&lt;plugins&gt;
+    &lt;plugin class="AuthenticationPlugin"
+            actions="REQUEST_AUTHENTICATION|AUTHENTICATE"/&gt;
+    &lt;plugin class="PermissionsPlugin"
+            actions="REQUEST_PERMISSIONS"/&gt;
+    ...
+    &lt;plugin class="FooPlugin"
+            actions="FOO_COMMAND_1|FOO_COMMAND_2" permission="FOO_PERMISSION"/&gt;
+&lt;/plugins&gt;
+</pre>
+
+<p>The following code excerpt shows the implementation of the plugin FooPlugin. Plugins
+have their own lifecycle. Each web app is serviced by its own instance of a plugin. When
+the connection is opened, onCreate() is invoked. When the web app terminates the connection,
+onDestroy() is invoked. Whenever the web app calls an action, the execute() method of the
+appropriate plugin is invoked. Method execute() runs in the context of the WebAppBooster
+background service. If the plugin needs to render a user interface, it first needs to call
+method runInContextOfProxyActivity(). This will in turn invoke the method callbackFromProxy():
+</p>
+
+<pre class="brush: java">
+public class FooPlugin extends Plugin {
+
+    @Override
+    public void onCreate(String origin) {
+        // ...
+    }
+
+    @Override
+    public void onDestroy() {
+        // ...
+    }
+
+    @Override
+    public void execute(Request request) {
+        // ...
+        // runInContextOfProxyActivity();
+    }
+
+    @Override
+    public void callbackFromProxy() {
+        // ...
+    }
+}
+</pre>
+
+<p>Once the new plugin is implemented and registered, it can be accessed from JavaScript by using
+the helper function WebAppBooster._sendRequest(). This function takes three arguments: (1) a JSON object
+that must have an action attribute whose value matches the declaration in plugins.xml. (2) a callback
+function that is invoked when the web app receives a response. (3) a boolean flag that indicates if
+the action will send one (0) or multiple replies (1). The latter is used for actions that trigger a
+continuous stream of sensor data (e.g., gyroscope):
+</p>
+
+<pre class="brush: js">
+var WebAppBooster = {
+    // ...
+    foo1Command: function(cb) {
+        var req = {action: "FOO_COMMAND_1"};
+        this._sendRequest(req, cb, 0);
+    },
+    foo2Command: function(cb) {
+        var req = {action: "FOO_COMMAND_2"};
+        this._sendRequest(req, cb, 0);
+    }
+};
+</pre>
+
+        </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- DOC                                                                       -->
+    <!-- ========================================================================= -->
+    <div id="sectionDoc" class="hidden">
+        <div class="contentTitle"><h1>Documentation</h1></div>
+        <div class="contentText">
+
+<p>This documentation is intended for web developers who wish to give
+their web apps a little boost. If you are interested to extend WebAppBooster
+by new functionality, please see the
+<a href="#" onclick="return showSection('sectionDeveloper')">developer</a>
+page.</p>
+
+<p>Using WebAppBooster is easy. If you are a web developer and wish to enrich
+your application by integrating it with a smartphone's capabilities, you simply
+need to include
+<a href="demo/js/webappbooster.js">webappbooster.js</a>:</p>
+
+<pre class="brush: xml">
+&lt;head&gt;
+    &lt;!-- ... --&gt;
+    &lt;script type="text/javascript" src="webappbooster.js"&gt;&lt;/script&gt;
+&lt;/head&gt;
+</pre>
+
+<p>Including the JavaScript file will expose a global object called WebAppBooster.
+Various functions of this global object allow access to a smartphone's capabilities.
+E.g., the following code excerpt shows how to take a picture from within your web
+application:</p>
+
+<pre class="brush: js">
+WebAppBooster.takePhoto(function(resp) {
+    if (resp.status == 0) {
+        // Photo taken. resp.uri will contain a URI to the image.
+    } else {
+        // User aborted action.
+    }
+});
+</pre>
+
+<p>The callback will return a JSON object whose value is specific to the data being returned.
+Note that WebAppBooster will only allow function takePicture() if the web application
+first requested the permission PERMISSION_CAMERA via WebAppBooster.requestPermissions() from
+the user. Please consult the source code of the
+<a href="#" onclick="return showSection('sectionDemo')">demo</a>
+page for further examples.</p>
+
+        </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- DEMO                                                                      -->
+    <!-- ========================================================================= -->
+    <div id="sectionDemo" class="hidden">
+        <div class="contentTitle"><h1>Demo</h1></div>
+        <div class="contentText">
+          <p>Before running the demo, please make sure that you have downloaded
+          and installed WebAppBooster from the Google
+          <a href="https://play.google.com/store/apps/details?id=org.webappbooster">Play Store</a>.
+          Next open <a href="/demo/">http://webappbooster.org/demo/</a>
+          on your Android device where you have installed WebAppBooster.</p>
+        </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- FAQ                                                                       -->
+    <!-- ========================================================================= -->
+    <div id="sectionFaq" class="hidden">
+        <div class="contentTitle"><h1>Frequently Asked Questions</h1></div>
+        <div class="contentText">
+          <ol>
+            <li>
+              <div class="faq">Is WebAppBooster free?</div>
+              <div>Yes. WebAppBooster is released under the BSD Open Source license. The
+              complete source code is available at
+              <a href="http://sourceforge.net/projects/webappbooster/">SourceForge</a>.<div>
+            </li>
+
+            <li>
+              <div class="faq">Is WebAppBooster also available for iOS?</div>
+              <div>No. Apple restricts the kind of services that can run in the background. WebAppBooster would
+              not comply to Apple's license agreement.</div>
+            </li>
+
+            <li>
+              <div class="faq">What kind of Web API is supported?</div>
+              <div>Currently WebAppBooster supports the following APIs:
+              <ul>
+                <li> Accelerometer/Gyroscope</li>
+                <li> Vibrator</li>
+                <li> Pick a contact</li>
+                <li> List all songs</li>
+                <li> List all photos</li>
+                <li> Take a picture</li>
+              </ul>
+              Additional plugins can easily be implemented.</div>
+            </li>
+            
+            <li>
+              <div class="faq">What permissions does WebAppBooster require?</div>
+              <div>WebAppBooster acts as a gateway to the phone's data and sensors. As such, it requires
+              Android permissions to access data such as contacts and sensors such as GPS.
+              However, a web app will only be given access to those sensitive resources after the user
+              explicitly granted the appropriate permissions first.</div>
+          </ol>
+        </div>
+    </div>
+</div>
+<div id="footer">
+  <a href="http://www.aszx.net/">web template</a> by
+  <a href="http://www.bryantsmith.com/">bryant smith</a>
+</div>
+
+<script type="text/javascript">
+    SyntaxHighlighter.defaults['toolbar'] = false;
+    SyntaxHighlighter.all()
+</script>
+
+</body>
+</html>
